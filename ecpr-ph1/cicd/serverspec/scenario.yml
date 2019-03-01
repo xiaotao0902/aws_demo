@@ -1,0 +1,23 @@
+servers:
+  jenkins:
+    - jenkins-server
+  gitlab:
+    - gitlab-server
+--- 
+
+jenkins-server:
+  host: 13.231.128.66
+  ssh_opts:
+    port: 22
+    user: "ec2-user"
+    keys: "~/.ssh/bastion-terraform.pem"
+    verify_host_key: :never
+    
+gitlab-server:
+  host: localhost
+  endpoint: http://lb-gitlib-1183329882.ap-northeast-1.elb.amazonaws.com
+  ssh_opts:
+    port: 22
+    user: "ec2-user"
+    keys: "~/.ssh/bastion-terraform.pem"
+    verify_host_key: :never

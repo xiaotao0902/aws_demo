@@ -1,0 +1,7 @@
+servers:
+  eks:
+    - eks-server
+--- 
+
+eks-server:
+   cmd: kubectl get nodes --watch
