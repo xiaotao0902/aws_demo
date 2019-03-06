@@ -1,7 +1,13 @@
+###############################
+#jenkins                      #
+###############################
+
+
 data "template_file" "jenkins_setup" {
   template = "${file("jenkins_setup.tpl")}"
 }
 
+#jenkinsインスタンス
 resource "aws_instance" "instance-jenkins" {
   ami                    = "${var.jenkins_ami}"
   instance_type          = "${var.jenkins_instance_type}"

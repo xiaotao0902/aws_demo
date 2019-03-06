@@ -1,0 +1,25 @@
+.center {  
+			height:600px;
+             display:flex;
+             justify-content:center;
+             align-items:center;
+  }  
+
+.borderb {
+	background-color: rgb(243, 243, 243);
+}
+
+.border1 {
+	background-color: white;
+}
+
+.padding {
+	padding: 15px;
+	margin: 10px;
+}
+
+.loginImage {
+	width: 15em;
+	height: 15em;
+}
+

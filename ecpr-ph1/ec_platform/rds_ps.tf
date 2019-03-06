@@ -1,3 +1,4 @@
+# set up database subnet group for database
 resource "aws_db_subnet_group" "db-subnet-group-eks" {
   name       = "db-subnet-group-eks"
   subnet_ids = ["${aws_subnet.public.*.id}"]
@@ -5,12 +6,13 @@ resource "aws_db_subnet_group" "db-subnet-group-eks" {
     Name = "subnet-group-eks"
   }
 }
-
+# set up database parameter group for database
 resource "aws_db_parameter_group" "db-parameter-group-eks" {
   name   = "db-parameter-group-eks"
   family = "postgres9.6"
 }
 
+# set up database option parameter group for database
 resource "aws_db_option_group" "db-option-group-eks" {
   name                     = "db-option-group-eks"
   option_group_description = "db-option-group-eks"
@@ -21,6 +23,7 @@ resource "aws_db_option_group" "db-option-group-eks" {
   }
 }
 
+# set up database
 resource "aws_db_instance" "db-postgres-eks" {
   identifier = "pg-eks"
   allocated_storage      = 10

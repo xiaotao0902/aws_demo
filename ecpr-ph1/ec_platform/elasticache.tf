@@ -1,8 +1,10 @@
+# elasticache subnet group to set up redis running on which subnet
 resource "aws_elasticache_subnet_group" "cache-subnet-group-eks" {
   name       = "cache-subnet-group-eks"
   subnet_ids = ["${aws_subnet.public.*.id}"]
 }
 
+# elasticache redis 
 resource "aws_elasticache_cluster" "redis-eks" {
   cluster_id           = "cluster-redis-eks"
   engine               = "${var.cluster_engine}"

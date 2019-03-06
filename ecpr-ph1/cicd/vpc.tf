@@ -1,5 +1,10 @@
+###############################
+#VPC                          #
+###############################
+
 data "aws_availability_zones" "available" {}
 
+#VPCリソース
 resource "aws_vpc" "vpc-gitlab" {
   cidr_block       = "${var.cidr_block_vpc}"
   instance_tenancy = "default"
@@ -8,6 +13,7 @@ resource "aws_vpc" "vpc-gitlab" {
   }
 }
 
+#インターネットゲートウェイリソース
 resource "aws_internet_gateway" "igw-gitlab" {
 	vpc_id = "${aws_vpc.vpc-gitlab.id}"
 	tags {
@@ -15,6 +21,7 @@ resource "aws_internet_gateway" "igw-gitlab" {
 	}
 }
 
+#パブリックルートテーブル
 resource "aws_route_table" "rtl-gitlab-public" {
   vpc_id = "${aws_vpc.vpc-gitlab.id}"
 
@@ -24,6 +31,7 @@ resource "aws_route_table" "rtl-gitlab-public" {
   }
 }
 
+#パブリックサブネット
 resource "aws_subnet" "subnet-gitlab-public" {
   count                   = "${length(var.cidr_block_public_subnet)}"
   vpc_id                  = "${aws_vpc.vpc-gitlab.id}"
@@ -35,22 +43,25 @@ resource "aws_subnet" "subnet-gitlab-public" {
   }
 }
 
+#パブリックサブネットにパブリックルートテーブルをコホートする
 resource "aws_route_table_association" "rtl-gitlab-public" {
   count          = "${length(var.cidr_block_public_subnet)}"
   route_table_id = "${aws_route_table.rtl-gitlab-public.id}"
   subnet_id      = "${element(aws_subnet.subnet-gitlab-public.*.id, count.index)}"
 }
 
-
+#Elastic IP
 resource "aws_eip" "eip-nat-gitlab" {
   vpc      = true
 }
 
+#NAT ゲートウェイ
 resource "aws_nat_gateway" "nat-gateway-gitlab" {
   allocation_id = "${aws_eip.eip-nat-gitlab.id}"
   subnet_id     = "${aws_subnet.subnet-gitlab-public.*.id[0]}"
 }
 
+#プライベートルートテーブル
 resource "aws_route_table" "rtl-gitlab-private" {
   vpc_id = "${aws_vpc.vpc-gitlab.id}"
   route {
@@ -59,6 +70,7 @@ resource "aws_route_table" "rtl-gitlab-private" {
   }
 }
 
+#プライベートサブネット
 resource "aws_subnet" "subnet-gitlab-private" {
   count                   = "${length(var.cidr_block_private_subnet)}"
   vpc_id                  = "${aws_vpc.vpc-gitlab.id}"
@@ -70,6 +82,7 @@ resource "aws_subnet" "subnet-gitlab-private" {
   }
 }
 
+#プライベートサブネットにプライベートルートテーブルをコホートする
 resource "aws_route_table_association" "rtl-gitlab-private" {
   count          = "${length(var.cidr_block_private_subnet)}"
   route_table_id = "${aws_route_table.rtl-gitlab-private.id}"

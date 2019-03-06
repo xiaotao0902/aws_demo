@@ -1,3 +1,8 @@
+###############################
+#rds-postgresql               #
+###############################
+
+#サブネットグループ
 resource "aws_db_subnet_group" "db-subnet-group-gitlab" {
   name       = "db-subnet-group-gitlab"
   subnet_ids = ["${aws_subnet.subnet-gitlab-private.*.id}"]
@@ -6,11 +11,13 @@ resource "aws_db_subnet_group" "db-subnet-group-gitlab" {
   }
 }
 
+#パラメータグループ 
 resource "aws_db_parameter_group" "db-parameter-group-gitlab" {
   name   = "db-parameter-group-gitlab"
   family = "postgres10"
 }
 
+#オプショングループ 
 resource "aws_db_option_group" "db-option-group-gitlab" {
   name                     = "db-option-group-gitlab"
   option_group_description = "db-option-group-gitlab"
@@ -21,6 +28,7 @@ resource "aws_db_option_group" "db-option-group-gitlab" {
   }
 }
 
+#DB インスタンス
 resource "aws_db_instance" "db-postgres-gitlab" {
   identifier = "pg-gitlab"
   allocated_storage      = 10

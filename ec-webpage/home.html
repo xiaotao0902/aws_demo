@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<!-- This Web application uses a JSON file as a data source to display of all the product titles and gives the ability to search for a product based on product title,
+the application will also allow you to refine your search result with more keywords entered -->
+<html> 
+<!-- Bootstrap CDN -->
+<head> 
+	<meta charset="utf-8">
+	<title>ProductSearch</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/launch.js"></script>
+</head>
+
+<body onload="init()">
+	<!-- Navigation Bar with input Textbox and a search and clear buttons -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<form class="navbar-form navbar-left">
+				<div class="form-group">
+					<input name="name" type="text" class="form-control" placeholder="Search" onkeypress="handle(event)">
+					<button type="button" class="btn btn-default" onclick="search()">Search</button>
+				</div>
+			</form>
+		</div>
+	</nav>
+	
+	<!-- 	Table to be filled with the Search results -->
+	<div class="container-fluid">
+		<table id="result" class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody id="tableBody">
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,3 +1,8 @@
+###############################
+#セキュリティグループ                #
+###############################
+
+#パブリックセキュリティグループ 
 resource "aws_security_group" "security-group-gitlab-public" {
   name   = "security-group-gitlab-public"
   vpc_id = "${aws_vpc.vpc-gitlab.id}"
@@ -36,6 +41,7 @@ resource "aws_security_group" "security-group-gitlab-public" {
   }
 }
 
+#giblab app serverセキュリティグループ 
 resource "aws_security_group" "security-group-gitlab-apl" {
   name   = "security-group-gitlab-apl"
   vpc_id = "${aws_vpc.vpc-gitlab.id}"
@@ -56,6 +62,7 @@ resource "aws_security_group" "security-group-gitlab-apl" {
   }  
 }
 
+#giblab DB serverセキュリティグループ 
 resource "aws_security_group" "security-group-gitlab-db" {
   name   = "security-group-gitlab-db"
   vpc_id = "${aws_vpc.vpc-gitlab.id}"

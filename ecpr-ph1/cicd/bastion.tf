@@ -1,3 +1,7 @@
+###############################
+#踏み台                        #
+###############################
+#踏み台インスタンス
 resource "aws_instance" "instance-gitlab-bastion" {
   ami                    = "${var.bastion_ami}"
   instance_type          = "${var.bastion_instance_type}"
@@ -20,7 +24,12 @@ set -o xtrace
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
-
+sudo yum install -y redhat-rpm-config
+sudo gem install bundler
+sudo gem install io-console
+sudo gem install serverspec
+sudo gem install serverspec-runner
+sudo gem install highline
 sudo yum install -y gcc
 sudo yum install -y python-pip
 sudo wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.2/pip/pgadmin4-4.2-py2.py3-none-any.whl

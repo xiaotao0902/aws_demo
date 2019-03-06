@@ -11,19 +11,20 @@ db_username               = "userGitlab"
 db_password               = "passwordGitlab"
 db_multi_az               = true
 
-gitlib_image_id           = "ami-014e0ffcae71ba50a"
-gitlib_instance_type      = "t2.medium"
-gitlib_key_name           = "bastion-terraform"
-gitlib_ag_max_size        = 1
-gitlib_ag_min_size        = 1
+gitlab_image_id           = "ami-014e0ffcae71ba50a"
+gitlab_instance_type      = "t2.medium"
+gitlab_key_name           = "gitlab_key"
+gitlab_ag_max_size        = 1
+gitlab_ag_min_size        = 1
+gitlab_email_from         ="jian.sun1@pactera.com"
   
 jenkins_ami               = "ami-05cd6c87a37390178"
 jenkins_instance_type     = "t2.micro"
-jenkins_key_name          = "bastion-terraform"
+jenkins_key_name          = "gitlab_key"
 
 bastion_ami               = "ami-05cd6c87a37390178"
 bastion_instance_type     = "t2.micro"
-bastion_key_name          = "bastion-terraform"
+bastion_key_name          = "gitlab_key"
 
 
 

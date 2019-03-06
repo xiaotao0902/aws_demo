@@ -1,5 +1,7 @@
 # Local .terraform directories
 **/.terraform/*
+**/serverspec/*.yml
+**/serverspec/*.csv
 
 # .tfstate files
 *.tfstate

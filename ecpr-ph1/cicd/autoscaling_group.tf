@@ -1,3 +1,8 @@
+###############################
+#Auto Scaling グループ          #
+###############################
+
+#ターゲットグループ
 resource "aws_lb_target_group" "lb-target-group-gitlab" {
     name                 = "lb-target-group-gitlab"
     port                 = "80"
@@ -10,6 +15,7 @@ resource "aws_lb_target_group" "lb-target-group-gitlab" {
     }
 }
 
+#ロードバランサー
 resource "aws_lb" "lb-gitlab" {
   name                       = "lb-gitlab"
   internal                   = false
@@ -23,6 +29,7 @@ resource "aws_lb" "lb-gitlab" {
   }
 }
 
+#リスナー
 resource "aws_lb_listener" "lb-listener-gitlab" {
   load_balancer_arn  = "${aws_lb.lb-gitlab.arn}"
   port               = "80"
@@ -33,7 +40,7 @@ resource "aws_lb_listener" "lb-listener-gitlab" {
   }
 }
 
-
+#起動設定の作成 
 resource "aws_launch_configuration" "launch-configuration-gitlab" {
   name_prefix      = "launch-configuration-gitlab-"
   image_id         = "${var.gitlab_image_id}"
@@ -60,12 +67,14 @@ sudo echo "gitlab_rails['db_host'] = '${aws_db_instance.db-postgres-gitlab.addre
 sudo echo "gitlab_rails['db_port'] = '5432'" >> /etc/gitlab/gitlab.rb
 sudo echo "gitlab_rails['db_prepared_statements'] = 'false'" >> /etc/gitlab/gitlab.rb
 sudo echo "gitlab_rails['db_statements_limit'] = '1000'" >> /etc/gitlab/gitlab.rb
+sudo echo "gitlab_rails['gitlab_email_from'] = '${var.gitlab_email_from}'" >> /etc/gitlab/gitlab.rb
 #sudo /opt/gitlab/embedded/bin/psql -U usergitlab -h ${aws_db_instance.db-postgres-gitlab.address} -d ${aws_db_instance.db-postgres-gitlab.name} -c "create extension pg_trgm;"
 sudo gitlab-ctl reconfigure
 sudo gitlab-ctl restart
   USERDATA
 }
 
+#Auto Scaling グループ
 resource "aws_autoscaling_group" "autoscaling-group-gitlab" {
   name = "autoscaling-group-gitlab"
   launch_configuration    = "${aws_launch_configuration.launch-configuration-gitlab.name}"

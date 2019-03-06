@@ -1,3 +1,4 @@
+# set up EC2 Instance as a session manager system
 resource "aws_instance" "instance-ssm-bastion" {
   ami                    = "${var.bastion_ami}"
   instance_type          = "${var.bastion_instance_type}"
@@ -37,14 +38,19 @@ yum install java-1.8.0-openjdk* -y
 wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 yum -y install apache-maven
 
+wget http://services.gradle.org/distributions/gradle-5.2-bin.zip -O /etc/gradle/gradle-5.2-bin.zip
+
+
 # enable serverspec
 sudo yum update -y
 sudo amazon-linux-extras install -y ruby2.4
 sudo yum install -y redhat-rpm-config
 sudo yum install -y ruby-devel
 sudo gem install bundler
+sudo gen install gc
 sudo gem install io-console
 sudo gem install rake
 sudo gem install serverspec
+sudo gen install serverspec-runner
 USERDATA
 }

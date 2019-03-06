@@ -99,6 +99,7 @@ resource "aws_security_group" "security-group-ssm-public" {
   }
 }
 
+#SECURITY GROUP DB
 resource "aws_security_group" "security-group-ec-db" {
   name   = "security-group-ec-db"
   vpc_id = "${aws_vpc.DEV-EC-Platform-VPC.id}"
@@ -109,7 +110,8 @@ resource "aws_security_group" "security-group-ec-db" {
     from_port   = 0
     to_port     = 65535
     protocol    = "tcp"
-	security_groups = ["${aws_security_group.security-group-eks-master.id}","${aws_security_group.security-group-eks-node.id}"]
+	security_groups = ["${aws_security_group.security-group-eks-master.id}","${aws_security_group.security-group-eks-node.id}"
+					  ,"${aws_security_group.security-group-ssm-public.id}"]
   }
   egress {
     from_port   = 0
@@ -119,6 +121,7 @@ resource "aws_security_group" "security-group-ec-db" {
   }
 }
 
+#SECURITY GROUP CACHE
 resource "aws_security_group" "security-group-ec-cache" {
   name   = "security-group-ec-cache"
   vpc_id = "${aws_vpc.DEV-EC-Platform-VPC.id}"

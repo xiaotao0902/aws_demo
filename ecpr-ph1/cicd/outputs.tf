@@ -13,16 +13,16 @@ jenkins-server:
   ssh_opts:
     port: 22
     user: "ec2-user"
-    keys: "~/.ssh/bastion-terraform.pem"
+    keys: "~/.ssh/id_rsa"
     verify_host_key: :never
     
 gitlab-server:
   host: localhost
-  endpoint: http://${aws_lb.lb-gitlab.dns_name}:8080
+  endpoint: http://${aws_lb.lb-gitlab.dns_name}
   ssh_opts:
     port: 22
     user: "ec2-user"
-    keys: "~/.ssh/bastion-terraform.pem"
+    keys: "~/.ssh/id_rsa"
     verify_host_key: :never 
  
   CONTENT

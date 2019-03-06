@@ -1,3 +1,8 @@
+###############################
+#system session manager role  #
+###############################
+
+#
 resource "aws_iam_role" "ssm-role-gitlab" {
   name = "ssm-role-gitlab"
 

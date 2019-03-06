@@ -1,3 +1,4 @@
+# kubernetes configuration for EKS
 output "kubectl config" {
   value = <<KUBECONFIG
 apiVersion: v1
@@ -30,6 +31,7 @@ users:
 KUBECONFIG
 }
 
+# kubernetes configuration for EKS
 output "EKS ConfigMap" {
   value = <<CONFIGMAP
 apiVersion: v1
@@ -46,7 +48,7 @@ data:
         - system:nodes
 CONFIGMAP
 }
-
+# datebase and elsticashe configuration
 output "Eks-info" {
   value =<<CONTENT
 datebase

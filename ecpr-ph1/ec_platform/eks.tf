@@ -53,7 +53,7 @@ USERDATA
 #WORK NODE CONFIGURATION
 resource "aws_autoscaling_group" "eks-worker" {
 	name					= "eks-worker"
-	desired_capacity		= 1
+	desired_capacity		= 2
 	launch_configuration	= "${aws_launch_configuration.eks-worker.id}"
 	max_size				= 10
 	min_size				= 1
